@@ -2,16 +2,16 @@ package com.amobu.qna_service.boundedContext.answer;
 
 import com.amobu.qna_service.boundedContext.question.Question;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Setter
 @Entity
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Answer {
     @Id //PRIMARY_KEY
@@ -24,5 +24,5 @@ public class Answer {
     private LocalDateTime createDate;
 
     @ManyToOne
-    private List<Question> question;
+    private Question question;
 }

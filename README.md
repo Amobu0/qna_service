@@ -1,4 +1,4 @@
-# qna_service
+# Q&A 게시판
 
 #### 프로젝트 소개 
  - 스프링부트 Q&A 게시판 만들기
@@ -11,6 +11,7 @@
  - Database: MariaDB
 
 ### 업데이트 내용
-25.4.28 MariaDB 연결 & Answer, Question 엔티티 생성
+1) MariaDB 연결 & Answer, Question 엔티티 & Repository 생성
+2) 1)에 대한 INSERT, SELECT Junit 유닛 테스트
 
 
