@@ -30,6 +30,13 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// JPA 관련 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// MariaDB 드라이버는 실행시에만 필요하니까 runtimeOnly로
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
 }
 
 tasks.named('test') {
