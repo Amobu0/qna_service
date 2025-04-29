@@ -1,8 +1,11 @@
 package com.amobu.qna_service;
 
+import com.amobu.qna_service.boundedContext.answer.Answer;
+import com.amobu.qna_service.boundedContext.answer.AnswerRepository;
 import com.amobu.qna_service.boundedContext.question.Question;
 import com.amobu.qna_service.boundedContext.question.QuestionRepository;
-import org.junit.jupiter.api.Assertions;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,21 @@ class QnaServiceApplicationTests {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @Test
-    @DisplayName("데이터 저장하기")
-    void t001() {
+    @Autowired
+    private AnswerRepository answerRepository;
+
+    @BeforeEach // 테스트 케이스 실행 전에 딱 1번 실행
+    void beforeEach() {
+
+        // 모든 질문 데이터 삭제
+        questionRepository.deleteAll();
+        // AUTO_INCREMENT 초기화
+        questionRepository.clearAutoIncrement();
+        // 모든 답변 데이터 삭제
+        answerRepository.deleteAll();
+        // AUTO_INCREMENT 초기화
+        answerRepository.clearAutoIncrement();
+
         Question q1 = new Question();
         q1.setSubject("제목입니다.1");
         q1.setContent("내용입니다.1");
@@ -36,6 +51,23 @@ class QnaServiceApplicationTests {
         q2.setContent("내용입니다.2");
         q2.setCreateDate(LocalDateTime.now());
         questionRepository.save(q2);    // 두번쨰 질문 저장
+
+        Answer a1 = new Answer();
+        a1.setContent("답변입니다.2");
+        q2.addAnswer(a1);
+        a1.setCreateDate(LocalDateTime.now());
+        answerRepository.save(a1);
+    }
+
+    @Test
+    @DisplayName("데이터 저장하기")
+    void t001() {
+        Question q = new Question();
+        q.setSubject("제목입니다.3");
+        q.setContent("내용입니다.3");
+        q.setCreateDate(LocalDateTime.now());
+        questionRepository.save(q);
+        assertEquals(3, questionRepository.count());
     }
 
     @Test
@@ -114,5 +146,44 @@ class QnaServiceApplicationTests {
         Question q = oq.get();
         questionRepository.delete(q);
         assertEquals(1, questionRepository.count());
+    }
+
+    @Test
+    @DisplayName("답변 데이터 생성 후 저장")
+    void t009() {
+        Optional<Question> oq = questionRepository.findById(1L);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
+
+        Answer a = new Answer();
+        a.setContent("답변입니다.1");
+        a.setQuestion(q); // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
+        a.setCreateDate(LocalDateTime.now());
+        answerRepository.save(a);
+    }
+
+    @Test
+    @DisplayName("답변 데이터 조회")
+    void t010() {
+        Optional<Answer> oa = answerRepository.findById(1L);
+        assertTrue(oa.isPresent());
+        Answer a = oa.get();
+        assertEquals(2, a.getQuestion().getId());
+    }
+
+    // findById 메서드를 실행하고 나면 DB가 끝어지기 때문에
+    // @Transactional 사용하면 메서드가 종료될 때까지 DB 연결이 유지된다.
+    @Transactional
+    @Test
+    @DisplayName("질문을 통해 답변 찾기")
+    void t011() {
+        Optional<Question> oq = questionRepository.findById(2L);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
+
+        List<Answer> answerList = q.getAnswerList(); // DB 연결이 끊긴 뒤 answerList 를 가져 옴 => 실패 @Transactional 사용이유
+
+        assertEquals(1, answerList.size());
+        assertEquals("답변입니다.2", answerList.getFirst().getContent());
     }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -29,6 +30,11 @@ public class Question {
 
     // CascadeType.REMOVE: 질문이 삭제되면 답변도 같이 삭제한다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answerList;
+    private List<Answer> answerList = new ArrayList<>();
+
+    public void addAnswer(Answer a) {
+        a.setQuestion(this);
+        answerList.add(a);
+    }
 
 }
