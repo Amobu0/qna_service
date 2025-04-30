@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 <head>
     <meta charset="UTF-8">
     <title>Q&A 게시판</title>
 </head>
 <body>
 
-    <h1>질문 리스트</h1>
-
-    <table border="1">
-        <colgroup>
-            <col width="60px">
-            <col width="250px">
-            <col width="250px">
-            <col width="250px">
-        </colgroup>
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>작성날짜</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="q : ${questionList}">
-                <td th:text="${q.id}"></td>
-                <td>
-                    <a th:href="@{|/question/detail/${q.id}|}" th:text="${q.subject}"></a>
-                </td>
-                <td th:text="${q.content}"></td>
-                <td th:text="${q.createDate}"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container my-3">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>작성날짜</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="q, loop : ${questionList}">
+                    <td th:text="${loop.count}"></td>
+                    <td>
+                        <a th:href="@{|/question/detail/${q.id}|}" th:text="${q.subject}"></a>
+                    </td>
+                    <td th:text="${q.content}"></td>
+                    <td th:text="${#temporals.format(q.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
