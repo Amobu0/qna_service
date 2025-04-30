@@ -13,5 +13,6 @@
 ### 업데이트 내용
 1) MariaDB 연결 & Answer, Question 엔티티 & Repository 생성
 2) 1)에 대한 INSERT, SELECT, UPDATE, DELETE JUNIT TEST
+3) 타임리프를 적용하여 질문 리스트 & 상세보기 페이지 구현
 
 

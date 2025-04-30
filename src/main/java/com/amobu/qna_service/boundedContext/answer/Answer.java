@@ -24,5 +24,6 @@ public class Answer {
     private LocalDateTime createDate;
 
     @ManyToOne
+    @ToString.Exclude
     private Question question;
 }

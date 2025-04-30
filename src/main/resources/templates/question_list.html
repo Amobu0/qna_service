@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q&A 게시판</title>
+</head>
+<body>
+
+    <h1>질문 리스트</h1>
+
+    <table border="1">
+        <colgroup>
+            <col width="60px">
+            <col width="250px">
+            <col width="250px">
+            <col width="250px">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="q : ${questionList}">
+                <td th:text="${q.id}"></td>
+                <td>
+                    <a th:href="@{|/question/detail/${q.id}|}" th:text="${q.subject}"></a>
+                </td>
+                <td th:text="${q.content}"></td>
+                <td th:text="${q.createDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

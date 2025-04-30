@@ -12,4 +12,9 @@ public class HomeController {
     public String showHome() {
         return "안녕";
     }
+
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/question/list";
+    }
 }
