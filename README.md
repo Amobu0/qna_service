@@ -16,7 +16,7 @@
 1) MariaDB 연결 & Answer, Question 엔티티 & Repository 생성
 2) 1)에 대한 INSERT, SELECT, UPDATE, DELETE JUNIT TEST
 3) 타임리프를 적용하여 질문 리스트 & 상세보기 페이지 구현
-4) 답변등록 구현, 부트스트랩 적용 
-5) 공통 템플릿, 유효성 검사 적용
+4) 답변등록 구현, 부트스트랩 적용, 공통 템플릿, 유효성 검사 적용
+5) 페이징 구현
 
 
