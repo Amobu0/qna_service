@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +22,13 @@ public class QuestionService {
     public Question findById(Long id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 질문을 찾을 수 없습니다. id=" + id));
+    }
+
+    public void save(String subject, String content) {
+        Question question = new Question();
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setCreateDate(LocalDateTime.now());
+        questionRepository.save(question);
     }
 }

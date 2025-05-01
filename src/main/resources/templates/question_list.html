@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-<head>
-    <meta charset="UTF-8">
-    <title>Q&A 게시판</title>
-</head>
-<body>
-
-    <div class="container my-3">
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content" class="container my-3">
         <table class="table">
             <thead class="table-dark">
                 <tr>
@@ -29,6 +20,6 @@
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
     </div>
-</body>
 </html>
