@@ -11,10 +11,11 @@
             </thead>
             <tbody>
                 <tr th:each="q, loop : ${paging}" class="text-center">
-                    <!--
+
                     <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
-                    -->
-                    <td th:text="${q.id}"></td>
+
+                    <!-- 생성되는 id로 순서 적용<td th:text="${q.id}"></td>  -->
+
                     <td class="text-start">
                         <a th:href="@{|/question/detail/${q.id}|}" th:text="${q.subject}"></a>
                         <span th:if="${#lists.size(q.answerList) > 0}"

@@ -37,9 +37,20 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        questionRepository.save(question);
+    }
+
+    public void delete(Question question) {
+        questionRepository.delete(question);
+    }
+
     public Page<Question> getList(int page) {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createDate"));
-        return this.questionRepository.findAll(pageable);
+        return questionRepository.findAll(pageable);
     }
 }
 
