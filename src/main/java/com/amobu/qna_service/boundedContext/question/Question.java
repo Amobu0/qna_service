@@ -1,6 +1,7 @@
 package com.amobu.qna_service.boundedContext.question;
 
 import com.amobu.qna_service.boundedContext.answer.Answer;
+import com.amobu.qna_service.boundedContext.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,11 @@ public class Question {
     private String content;
 
     private LocalDateTime createDate;
+
+    private LocalDateTime modifyDate;
+
+    @ManyToOne
+    private SiteUser author;
 
     // CascadeType.REMOVE: 질문이 삭제되면 답변도 같이 삭제한다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)

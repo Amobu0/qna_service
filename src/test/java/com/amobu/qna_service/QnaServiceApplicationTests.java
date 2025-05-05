@@ -2,9 +2,13 @@ package com.amobu.qna_service;
 
 import com.amobu.qna_service.boundedContext.answer.Answer;
 import com.amobu.qna_service.boundedContext.answer.AnswerRepository;
+import com.amobu.qna_service.boundedContext.answer.AnswerService;
 import com.amobu.qna_service.boundedContext.question.Question;
 import com.amobu.qna_service.boundedContext.question.QuestionRepository;
 import com.amobu.qna_service.boundedContext.question.QuestionService;
+import com.amobu.qna_service.boundedContext.user.SiteUser;
+import com.amobu.qna_service.boundedContext.user.UserRepository;
+import com.amobu.qna_service.boundedContext.user.UserService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +26,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class QnaServiceApplicationTests {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AnswerService answerService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private QuestionService questionService;
@@ -45,10 +58,19 @@ class QnaServiceApplicationTests {
         // AUTO_INCREMENT 초기화
         answerRepository.clearAutoIncrement();
 
+        // 모든 답변 데이터 삭제
+        userRepository.deleteAll();
+        // AUTO_INCREMENT 초기화
+        userRepository.clearAutoIncrement();
+
+        SiteUser user1 = userService.create("user1", "user1@test.com", "1234");
+        SiteUser user2 = userService.create("user2", "user2@test.com", "1234");
+
         Question q1 = new Question();
         q1.setSubject("제목입니다.1");
         q1.setContent("내용입니다.1");
         q1.setCreateDate(LocalDateTime.now());
+        q1.setAuthor(user1);
         questionRepository.save(q1);    // 첫번쨰 질문 저장
         // INSERT 쿼리 실행
 
@@ -56,12 +78,10 @@ class QnaServiceApplicationTests {
         q2.setSubject("제목입니다.2");
         q2.setContent("내용입니다.2");
         q2.setCreateDate(LocalDateTime.now());
+        q2.setAuthor(user2);
         questionRepository.save(q2);    // 두번쨰 질문 저장
 
-        Answer a1 = new Answer();
-        a1.setContent("답변입니다.2");
-        q2.addAnswer(a1);
-        a1.setCreateDate(LocalDateTime.now());
+        Answer a1 = answerService.create(q2, "답변입니다.2", user2);
         answerRepository.save(a1);
     }
 
@@ -195,8 +215,11 @@ class QnaServiceApplicationTests {
 
     @Test
     @DisplayName("대량의 테스트 데이터 만들기")
-    void test011() {
+    void test012() {
+        SiteUser user2 = userService.getUser("user2");
+
         LongStream.rangeClosed(3, 300)
-                .forEach(no -> questionService.save("테스트 제목입니다.%d".formatted(no), "테스트 내용입니다.%d".formatted(no)));
+                .forEach(
+                        no -> questionService.create("테스트 제목입니다.%d".formatted(no), "테스트 내용입니다.%d".formatted(no), user2));
     }
 }

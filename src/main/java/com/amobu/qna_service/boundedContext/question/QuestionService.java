@@ -1,5 +1,6 @@
 package com.amobu.qna_service.boundedContext.question;
 
+import com.amobu.qna_service.boundedContext.user.SiteUser;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,11 +28,12 @@ public class QuestionService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 질문을 찾을 수 없습니다. id=" + id));
     }
 
-    public void save(String subject, String content) {
+    public void create(String subject, String content, SiteUser author) {
         Question question = new Question();
         question.setSubject(subject);
         question.setContent(content);
         question.setCreateDate(LocalDateTime.now());
+        question.setAuthor(author);
         questionRepository.save(question);
     }
 

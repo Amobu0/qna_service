@@ -1,6 +1,7 @@
 package com.amobu.qna_service.boundedContext.answer;
 
 import com.amobu.qna_service.boundedContext.question.Question;
+import com.amobu.qna_service.boundedContext.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +24,12 @@ public class Answer {
 
     private LocalDateTime createDate;
 
+    private LocalDateTime modifyDate;
+
     @ManyToOne
     @ToString.Exclude
     private Question question;
+
+    @ManyToOne
+    private SiteUser author;
 }

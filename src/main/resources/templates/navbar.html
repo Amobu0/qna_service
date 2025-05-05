@@ -8,7 +8,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">로그인</a>
+                    <!-- sec:authorize="isAnonymous() : 로그인 되지 않은 상태  -->
+                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+
+                    <!-- sec:authorize="isAuthenticated() : 로그인 된 상태  -->
+                    <a class="nav-link" sec:authorize="isAuthenticated()"href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a>
+
+                    <form id="logoutForm" th:action="@{/user/logout}" method="post" style="display: none;">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    </form>
+
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/signup}">회원가입</a>
                 </li>
             </ul>
         </div>

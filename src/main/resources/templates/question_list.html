@@ -1,27 +1,27 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="container my-3">
         <table class="table">
-            <thead class="table-dark">
+            <thead class="table-dark text-center">
                 <tr>
                     <th>번호</th>
-                    <th>제목</th>
-                    <th>내용</th>
+                    <th style="width:50%">제목</th>
+                    <th>작성자</th>
                     <th>작성날짜</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="q, loop : ${paging}">
+                <tr th:each="q, loop : ${paging}" class="text-center">
                     <!--
                     <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
                     -->
                     <td th:text="${q.id}"></td>
-                    <td>
+                    <td class="text-start">
                         <a th:href="@{|/question/detail/${q.id}|}" th:text="${q.subject}"></a>
                         <span th:if="${#lists.size(q.answerList) > 0}"
                               th:text="${#lists.size(q.answerList)}"
                               style="font-size: 13px; color: gray;"></span>
                     </td>
-                    <td th:text="${q.content}"></td>
+                    <td th:text="${q.author.username}"></td>
                     <td th:text="${#temporals.format(q.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                 </tr>
             </tbody>
