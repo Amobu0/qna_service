@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Entity
@@ -32,4 +34,11 @@ public class Answer {
 
     @ManyToOne
     private SiteUser author;
+
+    @ManyToMany
+    private Set<SiteUser> voters = new LinkedHashSet<>();
+
+    public void addVoter(SiteUser voter) {
+        voters.add(voter);
+    }
 }

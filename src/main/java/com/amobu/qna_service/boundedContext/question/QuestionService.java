@@ -52,5 +52,10 @@ public class QuestionService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createDate"));
         return questionRepository.findAll(pageable);
     }
+
+    public void vote(Question question, SiteUser siteUser) {
+        question.addVoter(siteUser);
+        questionRepository.save(question);
+    }
 }
 

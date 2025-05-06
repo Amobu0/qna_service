@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.security.PrivilegedAction;
 
 @RequestMapping("/answer")
 @RequiredArgsConstructor
@@ -36,12 +37,14 @@ public class AnswerController {
         Question question = questionService.findById(id);
         if (bindingResult.hasErrors()) {
             model.addAttribute(question);
+
             return "question_detail";
         }
         SiteUser author = userService.getUser(principal.getName());
         String content = answerForm.getContent();
-        answerService.create(question, content, author);
-        return "redirect:/question/detail/%s".formatted(id);
+        Answer answer = answerService.create(question, content, author);
+
+        return "redirect:/question/detail/%s#answer_%d".formatted(id, answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -67,7 +70,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         answerService.modify(answer, answerForm.getContent());
-        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+        return String.format("redirect:/question/detail/%s#answer_%d", answer.getQuestion().getId(), answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -79,5 +82,14 @@ public class AnswerController {
         }
         answerService.delete(answer);
         return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String answerVote(Principal principal, @PathVariable("id") Long id) {
+        Answer answer = answerService.findById(id);
+        SiteUser siteUser = userService.getUser(principal.getName());
+        answerService.vote(answer, siteUser);
+        return String.format("redirect:/question/detail/%s#answer_%d", answer.getQuestion().getId(), answer.getId());
     }
 }
