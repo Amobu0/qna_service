@@ -28,7 +28,7 @@
 ![image](https://github.com/user-attachments/assets/6dcf930f-38a0-44b2-b345-a6218ead7b5e)
 
 - 질문 상세보기 및 답변 작성
-![image](https://github.com/user-attachments/assets/9dd60bce-8933-4f6d-95e1-0cc92ca9e261)
+![image](https://github.com/user-attachments/assets/6b594887-d668-474d-adfe-5ad580cff658)
 
 - 회원가입
 ![image](https://github.com/user-attachments/assets/b8720b1a-8ada-4a93-86a8-b5a0bbb6379a)
