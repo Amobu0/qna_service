@@ -27,8 +27,9 @@
 - 질문 리스트
 ![image](https://github.com/user-attachments/assets/6dcf930f-38a0-44b2-b345-a6218ead7b5e)
 
-- 질문 상세보기 및 답변 작성
-![image](https://github.com/user-attachments/assets/6b594887-d668-474d-adfe-5ad580cff658)
+- 질문 상세보기, 답변 작성, 추천, 앵커
+![image](https://github.com/user-attachments/assets/d6a0c589-4c8b-4439-8516-0485583c87b5)
+
 
 - 회원가입
 ![image](https://github.com/user-attachments/assets/b8720b1a-8ada-4a93-86a8-b5a0bbb6379a)
