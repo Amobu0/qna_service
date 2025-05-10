@@ -33,7 +33,7 @@
 - 회원가입
 ![image](https://github.com/user-attachments/assets/b8720b1a-8ada-4a93-86a8-b5a0bbb6379a)
 
-- 마크다운 적용 예시
+- 마크다운 적용 예시</br>
 ![image](https://github.com/user-attachments/assets/fad2db5f-d665-4c2b-97b2-2030ba747433)![image](https://github.com/user-attachments/assets/16afea93-e01d-4c84-bd9c-77894773b086)
 
 - 검색 기능
