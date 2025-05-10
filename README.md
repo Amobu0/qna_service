@@ -6,12 +6,11 @@
 ### 주요 기능
 - 질문 & 답변 CRUD
 - 회원가입, 로그인, 로그아웃
-- 추천 기능
-- 앵커 기능
+- 추천, 앵커, 마크다운 기능
 
 ### 기술 스택
  - Frontend: Thymeleaf 
- - Backend: Spring Boot / Spring Data JPA / Java21 / Spring Security
+ - Backend: Spring Boot / Spring Data JPA / Java21 / Spring Security / Markdown
  - Database: MariaDB
  - Design: BootStrap
 
@@ -22,5 +21,6 @@
 4) 회원가입, 로그인, 로그아웃 기능
 5) 로그인 시 질문 & 답변 CRUD
 6) 추천, 앵커 기능
+7) 마크다운 기능
 
 

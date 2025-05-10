@@ -1,4 +1,4 @@
-package com.amobu.qna_service.config;
+package com.amobu.qna_service.boundedContext.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
