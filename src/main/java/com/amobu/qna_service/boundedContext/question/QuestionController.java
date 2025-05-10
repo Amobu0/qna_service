@@ -25,8 +25,11 @@ public class QuestionController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        Page<Question> paging = questionService.getList(page);
+    public String list(@RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw,
+                       Model model) {
+        Page<Question> paging = questionService.getList(page, kw);
+        model.addAttribute("kw", kw);
         model.addAttribute("paging", paging);
 
         return "question_list";
@@ -60,7 +63,7 @@ public class QuestionController {
     @GetMapping("/modify/{id}")
     public String questionModify(QuestionForm questionForm, @PathVariable("id") Long id, Principal principal) {
         Question question = questionService.findById(id);
-        if(!question.getAuthor().getUsername().equals(principal.getName())) {
+        if (!question.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         questionForm.setSubject(question.getSubject());
@@ -92,6 +95,7 @@ public class QuestionController {
         questionService.delete(question);
         return "redirect:/";
     }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
     public String questionVote(Principal principal, @PathVariable("id") Long id) {

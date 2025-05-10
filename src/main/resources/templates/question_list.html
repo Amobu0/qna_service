@@ -1,5 +1,20 @@
 <html layout:decorate="~{layout}">
     <div layout:fragment="content" class="container my-3">
+        <div class="row my-3">
+            <div class="col-6 ms-auto">
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="kw" class="form-control" placeholder="검색어" th:value="${param.kw}">
+                        <button class="btn btn-outline-secondary" type="submit" id="btn_search">찾기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 검색 결과 개수 표시 -->
+        <div class="mb-2" th:if="${paging.totalElements > 0}">
+            <span class="text-muted">Total: <strong th:text="${paging.totalElements}">0</strong>건</span>
+        </div>
         <table class="table">
             <thead class="table-dark text-center">
                 <tr>
@@ -10,6 +25,12 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- 검색어 조건이 없을 경우 -->
+                <tr th:if="${paging.empty}">
+                    <td colspan="4" class="text-center text-muted">찾으시는 검색어가 없습니다.</td>
+                </tr>
+
+                <!-- 검색어 조건이 있을 경우 -->
                 <tr th:each="q, loop : ${paging}" class="text-center">
 
                     <td th:text="${paging.totalElements - (paging.number * paging.size) - loop.index}"></td>
@@ -35,7 +56,7 @@
                 <li class="page-item"
                     th:if="${(paging.number / 10) * 10 > 0}"
                     th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                    <a class="page-link" th:href="@{|?page=${(paging.number / 10) * 10 - 10}|}">
+                    <a class="page-link" th:href="@{|?page=${(paging.number / 10) * 10 - 10}&kw=${kw}|}">
                         <span>이전</span>
                     </a>
                 </li>
@@ -45,13 +66,15 @@
                         T(java.lang.Math).min(((paging.number / 10) * 10 + 9), paging.totalPages - 1))}"
                     class="page-item"
                     th:classappend="${page == paging.number} ? 'active'">
-                    <a class="page-link" th:text="${page + 1}" th:href="@{|?page=${page}|}"></a>
+                    <a class="page-link" th:text="${page + 1}"
+                       th:href="@{|?page=${page}&kw=${kw}|}"></a>
                 </li>
                 <!-- 다음 버튼: 마지막 블록이면 숨기기 -->
                 <li class="page-item"
                     th:if="${(paging.number / 10) * 10 + 10 < paging.totalPages}"
                     th:classappend="${!paging.hasNext} ? 'disabled'">
-                    <a class="page-link" th:href="@{|?page=${(paging.number / 10) * 10 + 10}|}">
+                    <a class="page-link"
+                       th:href="@{|?page=${(paging.number / 10) * 10 + 10}&kw=${kw}|}">
                         <span>다음</span>
                     </a>
                 </li>
